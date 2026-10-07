@@ -74,16 +74,21 @@ pipeline {
         }
 
         stage('Create Kubernetes Secret') {
-            steps {
-                bat '''
-                    kubectl create secret generic cloudpack-secrets ^
-                      --namespace cloudpack ^
-                      --from-literal=GROQ_API_KEY="%GROQ_API_KEY%" ^
-                      --from-literal=OPENWEATHER_API_KEY="%OPENWEATHER_API_KEY%" ^
-                      --dry-run=client -o yaml | kubectl apply -f -
-                '''
-            }
+    steps {
+        withCredentials([
+            string(credentialsId: 'GROQ_API_KEY', variable: 'GROQ_API_KEY'),
+            string(credentialsId: 'OPENWEATHER_API_KEY', variable: 'OPENWEATHER_API_KEY')
+        ]) {
+            bat '''
+                kubectl create secret generic cloudpack-secrets ^
+                  --namespace cloudpack ^
+                  --from-literal=GROQ_API_KEY="%GROQ_API_KEY%" ^
+                  --from-literal=OPENWEATHER_API_KEY="%OPENWEATHER_API_KEY%" ^
+                  --dry-run=client -o yaml | kubectl apply -f -
+            '''
         }
+    }
+}
 
         stage('Deploy to Kubernetes') {
             steps {
