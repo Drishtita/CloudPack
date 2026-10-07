@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agent-service
+  namespace: cloudpack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agent-service
+  template:
+    metadata:
+      labels:
+        app: agent-service
+    spec:
+      containers:
+        - name: agent-service
+          image: cloudpack-agent-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: GROQ_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloudpack-secrets
+                  key: GROQ_API_KEY
+
+            - name: GROQ_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: cloudpack-config
+                  key: GROQ_ENDPOINT
+
+            - name: GROQ_MODEL
+              valueFrom:
+                configMapKeyRef:
+                  name: cloudpack-config
+                  key: GROQ_MODEL
+
+            - name: WEATHER_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: cloudpack-config
+                  key: WEATHER_SERVICE_URL
+
+            - name: MEMORY_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: cloudpack-config
+                  key: MEMORY_SERVICE_URL
