@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from prometheus_fastapi_instrumentator import Instrumentator
 import requests
 import os
 
@@ -10,7 +11,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
-
+Instrumentator().instrument(app).expose(app)
 
 
 AGENT_SERVICE_URL = os.getenv("AGENT_SERVICE_URL", "http://localhost:8000")

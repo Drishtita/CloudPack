@@ -1,7 +1,9 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from prometheus_fastapi_instrumentator import Instrumentator
 
 from memory import memory_store
+
 
 
 app = FastAPI(
@@ -9,7 +11,7 @@ app = FastAPI(
     description="Session and trip memory for Smart Packing Agent",
     version="1.0.0"
 )
-
+Instrumentator().instrument(app).expose(app)
 
 # -----------------------------
 # Request models

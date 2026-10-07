@@ -1,12 +1,13 @@
 from fastapi import FastAPI
 from weather import check_weather
+from prometheus_fastapi_instrumentator import Instrumentator
 
 app = FastAPI(
     title="CloudPack Weather Service",
     description="Weather microservice for Smart Packing Agent",
     version="1.0.0"
 )
-
+Instrumentator().instrument(app).expose(app)
 
 @app.get("/")
 def root():

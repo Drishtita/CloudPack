@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: weather-service
-          image: cloudpack-weather-service:latest
+          image: 308621094314.dkr.ecr.ap-south-1.amazonaws.com/cloudpack-weather-service:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8001

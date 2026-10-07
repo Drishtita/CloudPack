@@ -1,4 +1,10 @@
 .env
 __pycache__/
+*.pyc
+*.pyo
 .ipynb_checkpoints/
 k8s/secret.yaml
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log

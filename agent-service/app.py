@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-
+from prometheus_fastapi_instrumentator import Instrumentator
 from agent import run_agent
 
 
@@ -9,7 +9,7 @@ app = FastAPI(
     description="AI orchestration service for Smart Packing Agent",
     version="1.0.0"
 )
-
+Instrumentator().instrument(app).expose(app)
 
 class AgentRequest(BaseModel):
     session_id: str

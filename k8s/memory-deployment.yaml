@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: memory-service
-          image: cloudpack-memory-service:latest
+          image: 308621094314.dkr.ecr.ap-south-1.amazonaws.com/cloudpack-memory-service:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8002

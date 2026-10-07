@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "agent-service"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["agent-service:8000"]
+
+  - job_name: "weather-service"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["weather-service:8001"]
+
+  - job_name: "memory-service"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["memory-service:8002"]
+
+  - job_name: "api-gateway"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["api-gateway:8003"]
