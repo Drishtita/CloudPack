@@ -21,18 +21,16 @@ pipeline {
         }
 
         stage('Test') {
-            steps {
-                echo 'Running CloudPack tests...'
-
-                bat '''
-                    python --version
-                    docker --version
-                    kubectl version --client
-                    aws --version
-                    echo CloudPack environment checks completed.
-                '''
-            }
-        }
+    steps {
+        echo 'Running CloudPack environment checks...'
+        bat '''
+            docker --version
+            kubectl version --client
+            "C:\\Users\\dogra\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe" --version
+            echo CloudPack environment checks completed.
+        '''
+    }
+}
 
         stage('Build Docker Images') {
             steps {
