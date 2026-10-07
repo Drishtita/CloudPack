@@ -43,24 +43,7 @@ pipeline {
             }
         }
 
-        stage('Login to Amazon ECR') {
-    steps {
-        bat '''
-            "C:\\Users\\dogra\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe" ecr get-login-password --region %AWS_REGION% | docker login --username AWS --password-stdin %ECR_REGISTRY%
-        '''
-    }
-}
-
-        stage('Push Images to ECR') {
-            steps {
-                bat '''
-                    docker push %AGENT_IMAGE%:latest
-                    docker push %WEATHER_IMAGE%:latest
-                    docker push %MEMORY_IMAGE%:latest
-                    docker push %GATEWAY_IMAGE%:latest
-                '''
-            }
-        }
+        
 
         stage('Configure Kubernetes') {
             steps {
