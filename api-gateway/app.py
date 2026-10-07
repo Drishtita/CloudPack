@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import requests
+import os
+
 
 app = FastAPI(
     title="CloudPack API Gateway",
@@ -9,10 +11,11 @@ app = FastAPI(
 )
 
 
-AGENT_SERVICE_URL = "http://localhost:8000"
-WEATHER_SERVICE_URL = "http://localhost:8001"
-MEMORY_SERVICE_URL = "http://localhost:8002"
 
+
+AGENT_SERVICE_URL = os.getenv("AGENT_SERVICE_URL", "http://localhost:8000")
+WEATHER_SERVICE_URL = os.getenv("WEATHER_SERVICE_URL", "http://localhost:8001")
+MEMORY_SERVICE_URL = os.getenv("MEMORY_SERVICE_URL", "http://localhost:8002")
 
 class AgentRequest(BaseModel):
     session_id: str

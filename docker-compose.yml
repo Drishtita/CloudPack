@@ -1,0 +1,43 @@
+services:
+  weather-service:
+    build: ./weather-service
+    container_name: cloudpack-weather
+    environment:
+      OPENWEATHER_API_KEY: ${OPENWEATHER_API_KEY}
+    expose:
+      - "8001"
+
+  memory-service:
+    build: ./memory-service
+    container_name: cloudpack-memory
+    expose:
+      - "8002"
+
+  agent-service:
+    build: ./agent-service
+    container_name: cloudpack-agent
+    environment:
+      GROQ_API_KEY: ${GROQ_API_KEY}
+      GROQ_ENDPOINT: ${GROQ_ENDPOINT}
+      GROQ_MODEL: ${GROQ_MODEL}
+      WEATHER_SERVICE_URL: http://weather-service:8001
+      MEMORY_SERVICE_URL: http://memory-service:8002
+    expose:
+      - "8000"
+    depends_on:
+      - weather-service
+      - memory-service
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: cloudpack-gateway
+    environment:
+      AGENT_SERVICE_URL: http://agent-service:8000
+      WEATHER_SERVICE_URL: http://weather-service:8001
+      MEMORY_SERVICE_URL: http://memory-service:8002
+    ports:
+      - "8003:8003"
+    depends_on:
+      - agent-service
+      - weather-service
+      - memory-service
