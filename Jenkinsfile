@@ -44,12 +44,12 @@ pipeline {
         }
 
         stage('Login to Amazon ECR') {
-            steps {
-                bat '''
-                    aws ecr get-login-password --region %AWS_REGION% | docker login --username AWS --password-stdin %ECR_REGISTRY%
-                '''
-            }
-        }
+    steps {
+        bat '''
+            "C:\\Users\\dogra\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe" ecr get-login-password --region %AWS_REGION% | docker login --username AWS --password-stdin %ECR_REGISTRY%
+        '''
+    }
+}
 
         stage('Push Images to ECR') {
             steps {
